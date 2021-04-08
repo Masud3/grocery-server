@@ -15,14 +15,14 @@ app.use(cors());
 
 
 
-var serviceAccount = require("./grocery-store-953f6-firebase-adminsdk-tbqdh-96e422d4ea.json");
+var serviceAccount = require("./configs/grocery-store-953f6-firebase-adminsdk-tbqdh-96e422d4ea.json");
 
 admin.initializeApp({
   credential: admin.credential.cert(serviceAccount)
 });
 
 
-const port = 5000
+const port = 5001
 
 
 
@@ -42,6 +42,7 @@ client.connect(err => {
 
   app.get('/products', (req, res) => {
     const bearer = req.headers.authorization;
+    console.log(bearer)
     if (bearer && bearer.startsWith('Bearer ')) {
       const idToken = bearer.split(' ')[1];
       console.log({ idToken });
@@ -67,5 +68,4 @@ client.connect(err => {
 });
 
 
-
-app.listen(port)
+app.listen(process.env.PORT || port)
